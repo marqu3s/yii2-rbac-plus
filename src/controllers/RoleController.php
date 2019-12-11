@@ -14,6 +14,7 @@ use s4studio\rbacplus\models\RoleSearch;
 /**
  * RoleController is controller for manager role
  * @author John Martin <john.itvn@gmail.com>
+ * @author Edmund Kawalec <e.kawalec@s4studio.pl>
  * @since 1.0.0
  */
 class RoleController extends Controller {

@@ -7,6 +7,7 @@ use yii\rbac\Item;
 
 /**
  * @author John Martin <john.itvn@gmail.com>
+ * @author Edmund Kawalec <e.kawalec@s4studio.pl>
  * @since 1.0.0
  */
 class RoleSearch extends AuthItemSearch {

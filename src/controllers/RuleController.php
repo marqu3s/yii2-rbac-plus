@@ -15,6 +15,7 @@ use s4studio\rbacplus\models\RuleSearch;
  * RuleController is controller for manager rule
  *
  * @author John Martin <john.itvn@gmail.com>
+ * @author Edmund Kawalec <e.kawalec@s4studio.pl>
  * @since 1.0.0
  */
 class RuleController extends Controller {

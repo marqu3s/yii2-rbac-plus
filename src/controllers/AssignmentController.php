@@ -14,6 +14,7 @@ use s4studio\rbacplus\models\AssignmentForm;
  * AssignmentController is controller for manager user assignment
  *
  * @author John Martin <john.itvn@gmail.com>
+ * @author Edmund Kawalec <e.kawalec@s4studio.pl>
  * @since 1.0.0
  */
 class AssignmentController extends Controller {
