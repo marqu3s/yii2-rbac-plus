@@ -60,7 +60,7 @@ GridView::widget([
 </div>
 <?php
 Modal::begin([
-    "id" => "ajaxCrubModal",
+    "id" => "ajaxRbacModal",
     "footer" => "", // always need it for jquery plugin
 ])
 ?>
