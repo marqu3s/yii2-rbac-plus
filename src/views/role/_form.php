@@ -37,7 +37,7 @@ $permissions = $authManager->getPermissions();
                     <?php foreach ($permissions as $permission): ?>
                         <tr>
                             <td>
-                                <input <?= in_array($permission->name, $model->permissions) ? "checked":"" ?> type="checkbox" name="Role[permissions][]" value="<?= $permission->name ?>">
+                                <input <?= in_array($permission->name, (array)$model->permissions) ? "checked":"" ?> type="checkbox" name="Role[permissions][]" value="<?= $permission->name ?>">
                             </td>
                             <td><?= $permission->name ?></td>    
                             <td><?= $permission->description ?></td>
