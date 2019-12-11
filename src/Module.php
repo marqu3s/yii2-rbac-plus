@@ -1,6 +1,6 @@
 <?php
 
-namespace johnitvn\rbacplus;
+namespace s4studio\rbacplus;
 
 use Yii;
 use yii\base\Module as BaseModule;
@@ -9,6 +9,7 @@ use yii\base\Module as BaseModule;
  * Description of Module
  *
  * @author John Martin <john.itvn@gmail.com>
+ * @author Edmund Kawalec <e.kawalec@s4studio.pl>
  * @since 1.0.0
  */
 class Module extends BaseModule {
