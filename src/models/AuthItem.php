@@ -4,11 +4,13 @@ namespace johnitvn\rbacplus\models;
 
 use Yii;
 use yii\base\Model;
+use yii\helpers\Json;
 use yii\rbac\Item;
 
 
 /**
  * @author John Martin <john.itvn@gmail.com>
+ * @author Edmund Kawalec <e.kawalec@s4studio.pl>
  * @since 1.0.0
  */
 abstract class AuthItem extends Model {
@@ -36,7 +38,7 @@ abstract class AuthItem extends Model {
         parent::__construct($config);
     }
 
-    public function unique() {
+    public function isUnique() {
         $authManager = Yii::$app->authManager;
         $value = $this->name;
         if ($authManager->getRole($value) !== null || $authManager->getPermission($value) !== null) {
@@ -58,7 +60,7 @@ abstract class AuthItem extends Model {
                 'range' => array_keys(Yii::$app->authManager->getRules()),
                 'message' => Yii::t('rbac', 'Rule not exists')],
             [['name'], 'required'],
-            [['name'], 'unique', 'when' => function() {
+            [['name'], 'isUnique', 'when' => function() {
             return $this->isNewRecord || ($this->item->name != $this->name);
         }],
             [['description', 'data', 'ruleName'], 'default'],
