@@ -1,6 +1,6 @@
 yii2-rbac-plus
 =============
-[![Latest Stable Version](https://poser.pugx.org/s4studio/yii2-rbac-plus/v/stable)](https://packagist.org/packages/s4studio/yii2-rbac-plus)
+[![Latest Stable Version](https://img.shields.io/packagist/v/s4studio/yii2-rbac-plus.svg)](https://packagist.org/packages/s4studio/yii2-rbac-plus)
 [![License](https://poser.pugx.org/s4studio/yii2-rbac-plus/license)](https://packagist.org/packages/s4studio/yii2-rbac-plus)
 [![Total Downloads](https://poser.pugx.org/s4studio/yii2-rbac-plus/downloads)](https://packagist.org/packages/s4studio/yii2-rbac-plus)
 [![Monthly Downloads](https://poser.pugx.org/s4studio/yii2-rbac-plus/d/monthly)](https://packagist.org/packages/s4studio/yii2-rbac-plus)
