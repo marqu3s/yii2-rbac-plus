@@ -72,15 +72,15 @@ Ok. That's done. Avaiable route now:
 'modules' => [
     'rbac' =>  [
         'class' => 's4studio\rbacplus\Module',
-        'userModelClassName'=>null,
-        'userModelIdField'=>'id',
-        'userModelLoginField'=>'username',
-        'userModelLoginFieldLabel'=>null,
-        'userModelExtraDataColumls'=>null,
-        'beforeCreateController'=>null,
-        'beforeAction'=>null
+        'userModelClassName' => null,
+        'userModelIdField' => 'id',
+        'userModelLoginField' => 'username',
+        'userModelLoginFieldLabel' => null,
+        'userModelExtraDataColumls' => null,
+        'beforeCreateController' => null,
+        'beforeAction' => null
     ]       
-]
+],
 ````
 
 + <b>userModelClassName</b>: The user model class.<br>
@@ -94,20 +94,18 @@ Ok. That's done. Avaiable route now:
 + <b>userModelExtraDataColumls</b> The extra data columns you want to show in user assign views.<br>
  The default in assignment data gridview just display id and login column data. if you want to add created_at column you can add
 ````php 
-'userModelExtraDataColumls'=>[
+'userModelExtraDataColumls' => [
     [
-        'attributes'=>'created_at',
-        'value'=>function($model){
-            return date('m/d/Y', $model->created_at);
-        }
+        'attributes' => 'created_at',
+        'format' => 'datetime',
     ]
-]
+],
 ````
 + <b>beforeCreateController</b> The callable before create all controller of <b>Rbac Plus</b> module.
 The default it is null. You need config this when you want to restrict access to <b>Rbac Plus</b> module.<br>
 Example:
 ````php
-'beforeCreateController'=>function($route){
+'beforeCreateController' => function($route) {
     /**
     *@var string $route The route consisting of module, controller and action IDs.
     */    
@@ -117,7 +115,7 @@ Example:
 The default it is null. You need config this when you want to restrict access to any action in some controller of <b>Rbac Plus</b> module <BR>
 Example:
 ````php
-'beforeAction'=>function($action){
+'beforeAction' => function($action) {
     /**
     *@var yii\base\Action $action the action to be executed.
     */    
