@@ -53,7 +53,7 @@ class Rule extends Model {
     public function rules() {
         return [
             [['name', 'className'], 'required'],
-            [['name'], 'unique', 'when' => function() {
+            [['name'], 'isUnique', 'when' => function() {
             return $this->isNewRecord || ($this->item->name != $this->name);
         }],
             [['className'], 'string'],
@@ -64,7 +64,7 @@ class Rule extends Model {
     /**
      * Check rule name is unique if not add error
      */
-    public function unique() {
+    public function isUnique() {
         $authManager = Yii::$app->authManager;
         $value = $this->name;
         if ($authManager->getRule($value) !== null) {
