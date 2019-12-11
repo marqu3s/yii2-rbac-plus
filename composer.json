@@ -20,9 +20,6 @@
         "issues": "https://github.com/s4studio/yii2-rbac-plus/issues?state=open",
         "source": "https://github.com/s4studio/yii2-rbac-plus"
     },
-    "suggest": {
-        "s4studio/yii2-user-plus": "High flexible user management extension for yii2"
-    },
     "minimum-stability": "dev",
     "require": {
         "yiisoft/yii2": ">=2.0.20",
