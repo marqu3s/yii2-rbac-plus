@@ -1,10 +1,10 @@
 yii2-rbac-plus
 =============
-[![Latest Stable Version](https://poser.pugx.org/johnitvn/yii2-rbac-plus/v/stable)](https://packagist.org/packages/johnitvn/yii2-rbac-plus)
-[![License](https://poser.pugx.org/johnitvn/yii2-rbac-plus/license)](https://packagist.org/packages/johnitvn/yii2-rbac-plus)
-[![Total Downloads](https://poser.pugx.org/johnitvn/yii2-rbac-plus/downloads)](https://packagist.org/packages/johnitvn/yii2-rbac-plus)
-[![Monthly Downloads](https://poser.pugx.org/johnitvn/yii2-rbac-plus/d/monthly)](https://packagist.org/packages/johnitvn/yii2-rbac-plus)
-[![Daily Downloads](https://poser.pugx.org/johnitvn/yii2-rbac-plus/d/daily)](https://packagist.org/packages/johnitvn/yii2-rbac-plus)
+[![Latest Stable Version](https://poser.pugx.org/s4studio/yii2-rbac-plus/v/stable)](https://packagist.org/packages/s4studio/yii2-rbac-plus)
+[![License](https://poser.pugx.org/s4studio/yii2-rbac-plus/license)](https://packagist.org/packages/s4studio/yii2-rbac-plus)
+[![Total Downloads](https://poser.pugx.org/s4studio/yii2-rbac-plus/downloads)](https://packagist.org/packages/s4studio/yii2-rbac-plus)
+[![Monthly Downloads](https://poser.pugx.org/s4studio/yii2-rbac-plus/d/monthly)](https://packagist.org/packages/s4studio/yii2-rbac-plus)
+[![Daily Downloads](https://poser.pugx.org/s4studio/yii2-rbac-plus/d/daily)](https://packagist.org/packages/s4studio/yii2-rbac-plus)
 
 Database role base access control manager for yii2
 
@@ -14,9 +14,6 @@ Features
 + CRUD operations for roles, permissions and rules
 + Allows to assign multiple roles to user
 + Nice views to intergrate right away
-+ Integrated with [Yii2-user-plus](https://github.com/johnitvn/yii2-user-plus) - flexible user management module
-
-<img src="http://s17.postimg.org/8p7idb9jz/screencapture_fastandfurious_dev_apps_test_user.png" alt="Yii2 RBAC manager" width="640">
 
 
 Installation
@@ -27,13 +24,13 @@ The preferred way to install this extension is through [composer](http://getcomp
 Either run
 
 ```
-php composer.phar require --prefer-dist johnitvn/yii2-rbac-plus "*"
+php composer.phar require --prefer-dist s4studio/yii2-rbac-plus "*"
 ```
 
 or add
 
 ```
-"johnitvn/yii2-rbac-plus": "*"
+"s4studio/yii2-rbac-plus": "*"
 ```
 
 to the require section of your `composer.json` file.
@@ -51,7 +48,7 @@ Usage
 ],
 'modules' => [
     'rbac' =>  [
-        'class' => 'johnitvn\rbacplus\Module'
+        'class' => 's4studio\rbacplus\Module'
     ]       
 ]
 ````
@@ -74,7 +71,7 @@ Ok. That's done. Avaiable route now:
 ````
 'modules' => [
     'rbac' =>  [
-        'class' => 'johnitvn\rbacplus\Module',
+        'class' => 's4studio\rbacplus\Module',
         'userModelClassName'=>null,
         'userModelIdField'=>'id',
         'userModelLoginField'=>'username',
