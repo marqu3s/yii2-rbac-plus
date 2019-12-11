@@ -10,6 +10,7 @@ $RECYCLE.BIN/
 
 nbproject
 vendor
+.idea
 
 # Windows Installer files
 *.cab

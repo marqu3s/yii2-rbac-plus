@@ -1,6 +1,6 @@
 <?php
 
-namespace johnitvn\rbacplus\models;
+namespace s4studio\rbacplus\models;
 
 use Yii;
 use yii\rbac\Item;

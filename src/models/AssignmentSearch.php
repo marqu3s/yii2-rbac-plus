@@ -1,10 +1,10 @@
 <?php
 
-namespace johnitvn\rbacplus\models;
+namespace s4studio\rbacplus\models;
 
 use Yii;
 use yii\data\ActiveDataProvider;
-use johnitvn\rbacplus\Module;
+use s4studio\rbacplus\Module;
 
 /**
  * @author John Martin <john.itvn@gmail.com>

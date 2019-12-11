@@ -5,7 +5,7 @@ use kartik\grid\GridView;
 use johnitvn\ajaxcrud\CrudAsset;
 
 /* @var $this yii\web\View */
-/* @var $searchModel johnitvn\rbacplus\models\AuthItemSearch */
+/* @var $searchModel s4studio\rbacplus\models\AuthItemSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = Yii::t('rbac','Rules Manager');

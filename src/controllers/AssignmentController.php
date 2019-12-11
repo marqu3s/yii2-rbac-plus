@@ -1,14 +1,14 @@
 <?php
 
-namespace johnitvn\rbacplus\controllers;
+namespace s4studio\rbacplus\controllers;
 
 use Yii;
 use yii\web\Controller;
 use yii\web\Response;
 use yii\helpers\Html;
-use johnitvn\rbacplus\Module;
-use johnitvn\rbacplus\models\AssignmentSearch;
-use johnitvn\rbacplus\models\AssignmentForm;
+use s4studio\rbacplus\Module;
+use s4studio\rbacplus\models\AssignmentSearch;
+use s4studio\rbacplus\models\AssignmentForm;
 
 /**
  * AssignmentController is controller for manager user assignment
