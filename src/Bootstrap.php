@@ -1,6 +1,6 @@
 <?php
 
-namespace johnitvn\rbacplus;
+namespace s4studio\rbacplus;
 
 use Yii;
 use yii\base\BootstrapInterface;
@@ -8,6 +8,7 @@ use yii\base\BootstrapInterface;
 /**
  * Hook with application bootstrap stage
  * @author John Martin <john.itvn@gmail.com>
+ * @author Edmund Kawalec <e.kawalec@s4studio.pl>
  * @since 1.0.0
  */
 class Bootstrap implements BootstrapInterface {
