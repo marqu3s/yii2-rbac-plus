@@ -203,7 +203,7 @@ class RuleController extends Controller {
              *   Process for ajax request
              */
             Yii::$app->response->format = Response::FORMAT_JSON;
-            return ['forceClose' => true, 'forceReload' => true];
+            return ['forceClose' => true, 'forceReload' => 'true'];
         } else {
             /*
              *   Process for non-ajax request
