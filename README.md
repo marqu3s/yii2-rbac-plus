@@ -24,13 +24,13 @@ The preferred way to install this extension is through [composer](http://getcomp
 Either run
 
 ```
-php composer.phar require --prefer-dist s4studio/yii2-rbac-plus "*"
+php composer.phar require --prefer-dist s4studio/yii2-rbac-plus "dev-master"
 ```
 
 or add
 
 ```
-"s4studio/yii2-rbac-plus": "*"
+"s4studio/yii2-rbac-plus": "dev-master"
 ```
 
 to the require section of your `composer.json` file.
