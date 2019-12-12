@@ -59,7 +59,7 @@ CrudAsset::register($this);
     </div>
 </div>
 <?php Modal::begin([
-    "id"=>"ajaxRbacModal",
+    "id"=>"ajaxCrubModal",
     "footer"=>"",// always need it for jquery plugin
 ])?>
 <?php Modal::end(); ?>

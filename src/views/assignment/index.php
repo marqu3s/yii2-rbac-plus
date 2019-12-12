@@ -49,7 +49,7 @@ echo GridView::widget([
 ]);
 
 Modal::begin([
-    "id" => "ajaxRbacModal",
+    "id" => "ajaxCrubModal",
     "footer" => "", // always need it for jquery plugin
 ]);
 Modal::end();
