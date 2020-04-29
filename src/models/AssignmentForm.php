@@ -55,7 +55,7 @@ class AssignmentForm extends Model {
      * @return boolean whether assignment save success
      */
     public function save() {
-        $this->authManager->revokeAll(intval($this->userId));
+        $this->authManager->revokeAll($this->userId);
         if ($this->roles != null) {
             foreach ($this->roles as $role) {
                 $this->authManager->assign($this->authManager->getRole($role), $this->userId);
