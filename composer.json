@@ -23,7 +23,7 @@
     "minimum-stability": "dev",
     "require": {
         "yiisoft/yii2": ">=2.0.40",
-        "johnitvn/yii2-ajaxcrud": "^2.1"
+        "denkorolkov/yii2-ajaxcrud": "@dev"
     },
     "autoload": {
         "psr-4": {
