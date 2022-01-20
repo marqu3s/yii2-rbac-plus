@@ -1,8 +1,6 @@
 <?php
 use yii\helpers\Html;
-use yii\bootstrap\Modal;
 use kartik\grid\GridView;
-use johnitvn\ajaxcrud\CrudAsset;
 
 /* @var $this yii\web\View */
 /* @var $searchModel s4studio\rbacplus\models\AuthItemSearch */
@@ -11,7 +9,6 @@ use johnitvn\ajaxcrud\CrudAsset;
 $this->title = Yii::t('rbac','Rules Manager');
 $this->params['breadcrumbs'][] = $this->title;
 
-CrudAsset::register($this);
 
 ?>
 <div class="auth-item-index">
@@ -58,8 +55,3 @@ CrudAsset::register($this);
         ])?>
     </div>
 </div>
-<?php Modal::begin([
-    "id"=>"ajaxCrubModal",
-    "footer"=>"",// always need it for jquery plugin
-])?>
-<?php Modal::end(); ?>
