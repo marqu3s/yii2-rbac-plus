@@ -8,7 +8,7 @@ use kartik\grid\GridView;
 /* @var $searchModel mdm\admin\models\searchs\Menu */
 $this->title = Yii::t('rbac', 'User Assignment');
 $this->params['breadcrumbs'][] = $this->title;
-CrudAsset::register($this);
+
 echo GridView::widget([
     'id' => 'crud-datatable',
     'dataProvider' => $dataProvider,
