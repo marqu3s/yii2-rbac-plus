@@ -1,9 +1,7 @@
 <?php
 
 use yii\helpers\Html;
-use yii\bootstrap\Modal;
 use kartik\grid\GridView;
-use johnitvn\ajaxcrud\CrudAsset;
 
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -48,11 +46,6 @@ echo GridView::widget([
     ]
 ]);
 
-Modal::begin([
-    "id" => "ajaxCrubModal",
-    "footer" => "", // always need it for jquery plugin
-]);
-Modal::end();
 
 
 
