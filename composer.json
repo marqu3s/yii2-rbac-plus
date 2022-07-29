@@ -22,7 +22,8 @@
     },
     "minimum-stability": "dev",
     "require": {
-        "yiisoft/yii2": ">=2.0.40"
+        "yiisoft/yii2": ">=2.0.40",
+        "s4studio/yii2-ajaxcrud": "dev-master"
     },
     "autoload": {
         "psr-4": {
