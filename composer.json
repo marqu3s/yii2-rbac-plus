@@ -1,5 +1,5 @@
 {
-    "name": "s4studio/yii2-rbac-plus",
+    "name": "marqu3s/yii2-rbac-plus",
     "description":"Database role base access control manager for yii2",
     "type": "yii2-extension",
     "license": "Apache-2.0",
@@ -14,23 +14,27 @@
             "email": "e.kawalec@s4studio.pl",
             "homepage": "https://github.com/s4studio?tab=repositories"
         }
+        {
+            "name": "Joao Marques",
+            "email": "joao@jjmf.com",
+            "homepage": "https://github.com/marqu3s?tab=repositories"
+        }
 
     ],    
     "support": {
-        "issues": "https://github.com/s4studio/yii2-rbac-plus/issues?state=open",
-        "source": "https://github.com/s4studio/yii2-rbac-plus"
+        "issues": "https://github.com/marqu3s/yii2-rbac-plus/issues?state=open",
+        "source": "https://github.com/marqu3s/yii2-rbac-plus"
     },
     "minimum-stability": "dev",
     "require": {
         "yiisoft/yii2": ">=2.0.40",
-        "s4studio/yii2-ajaxcrud": "dev-master"
     },
     "autoload": {
         "psr-4": {
-            "s4studio\\rbacplus\\": "src/"
+            "marqu3s\\rbacplus\\": "src/"
         }
     },
     "extra": {
-        "bootstrap": "s4studio\\rbacplus\\Bootstrap"
+        "bootstrap": "marqu3s\\rbacplus\\Bootstrap"
     }
 }
