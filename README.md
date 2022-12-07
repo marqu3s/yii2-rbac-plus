@@ -1,10 +1,10 @@
 yii2-rbac-plus
 =============
-[![Latest Stable Version](https://img.shields.io/packagist/v/s4studio/yii2-rbac-plus.svg)](https://packagist.org/packages/s4studio/yii2-rbac-plus)
-[![License](https://poser.pugx.org/s4studio/yii2-rbac-plus/license)](https://packagist.org/packages/s4studio/yii2-rbac-plus)
-[![Total Downloads](https://poser.pugx.org/s4studio/yii2-rbac-plus/downloads)](https://packagist.org/packages/s4studio/yii2-rbac-plus)
-[![Monthly Downloads](https://poser.pugx.org/s4studio/yii2-rbac-plus/d/monthly)](https://packagist.org/packages/s4studio/yii2-rbac-plus)
-[![Daily Downloads](https://poser.pugx.org/s4studio/yii2-rbac-plus/d/daily)](https://packagist.org/packages/s4studio/yii2-rbac-plus)
+[![Latest Stable Version](https://img.shields.io/packagist/v/marqu3s/yii2-rbac-plus.svg)](https://packagist.org/packages/marqu3s/yii2-rbac-plus)
+[![License](https://poser.pugx.org/marqu3s/yii2-rbac-plus/license)](https://packagist.org/packages/marqu3s/yii2-rbac-plus)
+[![Total Downloads](https://poser.pugx.org/marqu3s/yii2-rbac-plus/downloads)](https://packagist.org/packages/marqu3s/yii2-rbac-plus)
+[![Monthly Downloads](https://poser.pugx.org/marqu3s/yii2-rbac-plus/d/monthly)](https://packagist.org/packages/marqu3s/yii2-rbac-plus)
+[![Daily Downloads](https://poser.pugx.org/marqu3s/yii2-rbac-plus/d/daily)](https://packagist.org/packages/marqu3s/yii2-rbac-plus)
 
 Database role base access control manager for yii2
 
@@ -24,13 +24,13 @@ The preferred way to install this extension is through [composer](http://getcomp
 Either run
 
 ```
-php composer.phar require --prefer-dist s4studio/yii2-rbac-plus "dev-master"
+php composer.phar require --prefer-dist marqu3s/yii2-rbac-plus "dev-master"
 ```
 
 or add
 
 ```
-"s4studio/yii2-rbac-plus": "dev-master"
+"marqu3s/yii2-rbac-plus": "dev-master"
 ```
 
 to the require section of your `composer.json` file.
@@ -48,7 +48,7 @@ Usage
 ],
 'modules' => [
     'rbac' =>  [
-        'class' => 's4studio\rbacplus\Module'
+        'class' => 'marqu3s\rbacplus\Module'
     ]       
 ]
 ````
@@ -71,7 +71,7 @@ Ok. That's done. Avaiable route now:
 ````
 'modules' => [
     'rbac' =>  [
-        'class' => 's4studio\rbacplus\Module',
+        'class' => 'marqu3s\rbacplus\Module',
         'userModelClassName' => null,
         'userModelIdField' => 'id',
         'userModelLoginField' => 'username',
