@@ -1,6 +1,6 @@
 <?php
 
-namespace s4studio\rbacplus;
+namespace marqu3s\rbacplus;
 
 use Yii;
 use yii\base\BootstrapInterface;
@@ -11,16 +11,17 @@ use yii\base\BootstrapInterface;
  * @author Edmund Kawalec <e.kawalec@s4studio.pl>
  * @since 1.0.0
  */
-class Bootstrap implements BootstrapInterface {
-
+class Bootstrap implements BootstrapInterface
+{
     /**
      * Initial application compoments and modules need for extension
      * @param \yii\base\Application $app The application currently running
      * @return void
      */
-    public function bootstrap($app) {
+    public function bootstrap($app)
+    {
         // Set alias for extension source
-        Yii::setAlias("@rbacplus", __DIR__);
+        Yii::setAlias('@rbacplus', __DIR__);
 
         // Setup i18n compoment for translate all category user*
         if (!isset(Yii::$app->get('i18n')->translations['rbac*'])) {
@@ -30,5 +31,4 @@ class Bootstrap implements BootstrapInterface {
             ];
         }
     }
-
 }

@@ -1,5 +1,5 @@
 <?php
-namespace s4studio\rbacplus\models;
+namespace marqu3s\rbacplus\models;
 
 use Yii;
 use yii\data\ArrayDataProvider;
@@ -10,18 +10,18 @@ use yii\rbac\Item;
  * @author Edmund Kawalec <e.kawalec@s4studio.pl>
  * @since 1.0.0
  */
-abstract class AuthItemSearch extends AuthItem {
-
+abstract class AuthItemSearch extends AuthItem
+{
     /**
      * @inheritdoc
      */
-    public function rules() {
-        return [
-            [['name', 'description',], 'safe'],
-        ];
+    public function rules()
+    {
+        return [[['name', 'description'], 'safe']];
     }
 
-    public static function find($name) {
+    public static function find($name)
+    {
         throw new \yii\base\Exception('Not support find() method in this object');
     }
 
@@ -30,24 +30,29 @@ abstract class AuthItemSearch extends AuthItem {
      * @param array $params
      * @return \yii\data\ActiveDataProvider|\yii\data\ArrayDataProvider
      */
-    public function search($params) {
+    public function search($params)
+    {
         $authManager = Yii::$app->authManager;
         if ($this->getType() == Item::TYPE_ROLE) {
             $items = $authManager->getRoles();
         } else {
             $items = $authManager->getPermissions();
         }
-        
-        if ($this->load($params) && $this->validate() && (trim($this->name) !== '' || trim($this->description) !== '')) {
+
+        if (
+            $this->load($params) &&
+            $this->validate() &&
+            (trim($this->name) !== '' || trim($this->description) !== '')
+        ) {
             $search = strtolower(trim($this->name));
             $desc = strtolower(trim($this->description));
             $items = array_filter($items, function ($item) use ($search, $desc) {
-                return (empty($search) || strpos(strtolower($item->name), $search) !== false) && ( empty($desc) || strpos(strtolower($item->description), $desc) !== false);
+                return (empty($search) || strpos(strtolower($item->name), $search) !== false) &&
+                    (empty($desc) || strpos(strtolower($item->description), $desc) !== false);
             });
         }
         return new ArrayDataProvider([
             'allModels' => $items,
         ]);
     }
-
 }

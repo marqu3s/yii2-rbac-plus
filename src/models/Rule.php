@@ -1,6 +1,6 @@
 <?php
 
-namespace s4studio\rbacplus\models;
+namespace marqu3s\rbacplus\models;
 
 use Yii;
 use yii\base\Model;
@@ -10,11 +10,11 @@ use yii\base\Model;
  * @author Edmund Kawalec <e.kawalec@s4studio.pl>
  * @since 1.0.0
  */
-class Rule extends Model {
-
+class Rule extends Model
+{
     /**
      *
-     * @var string 
+     * @var string
      */
     public $name;
 
@@ -29,7 +29,7 @@ class Rule extends Model {
     private $item;
 
     /**
-     * @var boolean 
+     * @var boolean
      */
     public $isNewRecord = true;
 
@@ -38,7 +38,8 @@ class Rule extends Model {
      * @param \yii\rbac\Rule $item
      * @param array $config
      */
-    public function __construct($item, $config = []) {
+    public function __construct($item, $config = [])
+    {
         $this->item = $item;
         if ($item !== null) {
             $this->name = $item->name;
@@ -51,21 +52,27 @@ class Rule extends Model {
     /**
      * @inheritdoc
      */
-    public function rules() {
+    public function rules()
+    {
         return [
             [['name', 'className'], 'required'],
-            [['name'], 'isUnique', 'when' => function() {
-            return $this->isNewRecord || ($this->item->name != $this->name);
-        }],
+            [
+                ['name'],
+                'isUnique',
+                'when' => function () {
+                    return $this->isNewRecord || $this->item->name != $this->name;
+                },
+            ],
             [['className'], 'string'],
-            [['className'], 'classExists']
+            [['className'], 'classExists'],
         ];
     }
 
     /**
      * Check rule name is unique if not add error
      */
-    public function isUnique() {
+    public function isUnique()
+    {
         $authManager = Yii::$app->authManager;
         $value = $this->name;
         if ($authManager->getRule($value) !== null) {
@@ -74,34 +81,42 @@ class Rule extends Model {
                 'attribute' => $this->getAttributeLabel('name'),
                 'value' => $value,
             ];
-            $this->addError('name', Yii::$app->getI18n()->format($message, $params, Yii::$app->language));
+            $this->addError(
+                'name',
+                Yii::$app->getI18n()->format($message, $params, Yii::$app->language)
+            );
         }
     }
 
     /**
      * Validate class exists
      */
-    public function classExists() {
+    public function classExists()
+    {
         $message = null;
         if (!class_exists($this->className)) {
             $message = 'Class "{className}" not exist';
-        } else if (!is_subclass_of($this->className, yii\rbac\Rule::className())) {
+        } elseif (!is_subclass_of($this->className, yii\rbac\Rule::className())) {
             $message = 'Class "{className}" must extends yii\rbac\Rule';
-        } else if ((new $this->className())->name === null) {
+        } elseif ((new $this->className())->name === null) {
             $message = 'The "{className}::\$name" is not set';
-        } else if ((new $this->className())->name !== $this->name) {
+        } elseif ((new $this->className())->name !== $this->name) {
             $message = 'The "{className}::\$name" is incorrect with the name of rule you have set';
         }
 
         if ($message !== null) {
-            $this->addError('className', Yii::t('rbac', $message, ['className' => $this->className]));
+            $this->addError(
+                'className',
+                Yii::t('rbac', $message, ['className' => $this->className])
+            );
         }
     }
 
     /**
      * @inheritdoc
      */
-    public function attributeLabels() {
+    public function attributeLabels()
+    {
         return [
             'name' => Yii::t('rbac', 'Rule Name'),
             'className' => Yii::t('rbac', 'Class Name'),
@@ -113,7 +128,8 @@ class Rule extends Model {
      * @param type $id
      * @return null|static
      */
-    public static function find($id) {
+    public static function find($id)
+    {
         $item = Yii::$app->authManager->getRule($id);
         if ($item !== null) {
             return new self($item);
@@ -125,7 +141,8 @@ class Rule extends Model {
      * Save model to authManager
      * @return boolean
      */
-    public function save() {
+    public function save()
+    {
         if (!$this->validate()) {
             return false;
         }
@@ -153,12 +170,12 @@ class Rule extends Model {
      * @return  boolean whether the rule is successfully removed
      * @throws \yii\base\Exception When call delete() function in new record
      */
-    public function delete() {
+    public function delete()
+    {
         if ($this->isNewRecord) {
-            throw new \yii\base\Exception("Call delete() function in new record");
+            throw new \yii\base\Exception('Call delete() function in new record');
         }
         $authManager = Yii::$app->authManager;
         return $authManager->remove($this->item);
     }
-
 }

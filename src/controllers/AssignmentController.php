@@ -1,6 +1,6 @@
 <?php
 
-namespace s4studio\rbacplus\controllers;
+namespace marqu3s\rbacplus\controllers;
 
 use Yii;
 use yii\web\Controller;
@@ -17,8 +17,8 @@ use s4studio\rbacplus\models\AssignmentForm;
  * @author Edmund Kawalec <e.kawalec@s4studio.pl>
  * @since 1.0.0
  */
-class AssignmentController extends Controller {
-
+class AssignmentController extends Controller
+{
     /**
      * The current rbac module
      * @var Module $rbacModule
@@ -28,7 +28,8 @@ class AssignmentController extends Controller {
     /**
      * @inheritdoc
      */
-    public function init() {
+    public function init()
+    {
         parent::init();
         $this->rbacModule = Yii::$app->getModule('rbac');
     }
@@ -37,14 +38,15 @@ class AssignmentController extends Controller {
      * Show list of user for assignment
      * @return mixed
      */
-    public function actionIndex() {
-        $searchModel = new AssignmentSearch;
+    public function actionIndex()
+    {
+        $searchModel = new AssignmentSearch();
         $dataProvider = $searchModel->search();
         return $this->render('index', [
-                    'dataProvider' => $dataProvider,
-                    'searchModel' => $searchModel,
-                    'idField' => $this->rbacModule->userModelIdField,
-                    'usernameField' => $this->rbacModule->userModelLoginField,
+            'dataProvider' => $dataProvider,
+            'searchModel' => $searchModel,
+            'idField' => $this->rbacModule->userModelIdField,
+            'usernameField' => $this->rbacModule->userModelLoginField,
         ]);
     }
 
@@ -53,7 +55,8 @@ class AssignmentController extends Controller {
      * @param mixed $id The user id
      * @return mixed
      */
-    public function actionAssignment($id) {
+    public function actionAssignment($id)
+    {
         $model = call_user_func($this->rbacModule->userModelClassName . '::findOne', $id);
         $formModel = new AssignmentForm($id);
         $request = Yii::$app->request;
@@ -65,20 +68,26 @@ class AssignmentController extends Controller {
             }
             return [
                 'title' => $model->{$this->rbacModule->userModelLoginField},
-                'forceReload' => "true",
+                'forceReload' => 'true',
                 'content' => $this->renderPartial('assignment', [
                     'model' => $model,
                     'formModel' => $formModel,
                 ]),
-                'footer' => Html::button(Yii::t('rbac', 'Close'), ['class' => 'btn btn-default pull-left', 'data-dismiss' => "modal"]) .
-                Html::button(Yii::t('rbac', 'Save'), ['class' => 'btn btn-primary', 'type' => "submit"])
+                'footer' =>
+                    Html::button(Yii::t('rbac', 'Close'), [
+                        'class' => 'btn btn-default pull-left',
+                        'data-dismiss' => 'modal',
+                    ]) .
+                    Html::button(Yii::t('rbac', 'Save'), [
+                        'class' => 'btn btn-primary',
+                        'type' => 'submit',
+                    ]),
             ];
         } else {
             return $this->render('assignment', [
-                        'model' => $model,
-                        'formModel' => $formModel,
+                'model' => $model,
+                'formModel' => $formModel,
             ]);
         }
     }
-
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace s4studio\rbacplus\models;
+namespace marqu3s\rbacplus\models;
 
 use Yii;
 use yii\data\ActiveDataProvider;
@@ -10,10 +10,10 @@ use s4studio\rbacplus\Module;
  * @author John Martin <john.itvn@gmail.com>
  * @author Edmund Kawalec <e.kawalec@s4studio.pl>
  * @since 1.0.0
- * 
+ *
  */
-class AssignmentSearch extends \yii\base\Model {
-
+class AssignmentSearch extends \yii\base\Model
+{
     /**
      * @var Module $rbacModule
      */
@@ -34,7 +34,8 @@ class AssignmentSearch extends \yii\base\Model {
     /**
      * @inheritdoc
      */
-    public function init() {
+    public function init()
+    {
         parent::init();
         $this->rbacModule = Yii::$app->getModule('rbac');
     }
@@ -42,16 +43,16 @@ class AssignmentSearch extends \yii\base\Model {
     /**
      * @inheritdoc
      */
-    public function rules() {
-        return [
-            [['id', 'login'], 'safe'],
-        ];
+    public function rules()
+    {
+        return [[['id', 'login'], 'safe']];
     }
 
     /**
      * @inheritdoc
      */
-    public function attributeLabels() {
+    public function attributeLabels()
+    {
         return [
             'id' => Yii::t('rbac', 'ID'),
             'login' => $this->rbacModule->userModelLoginFieldLabel,
@@ -59,10 +60,11 @@ class AssignmentSearch extends \yii\base\Model {
     }
 
     /**
-     * Create data provider for Assignment model.    
+     * Create data provider for Assignment model.
      */
-    public function search() {
-        $query = call_user_func($this->rbacModule->userModelClassName . "::find");
+    public function search()
+    {
+        $query = call_user_func($this->rbacModule->userModelClassName . '::find');
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
@@ -71,11 +73,10 @@ class AssignmentSearch extends \yii\base\Model {
         if (!($this->load($params) && $this->validate())) {
             return $dataProvider;
         }
-        
+
         $query->andFilterWhere([$this->usersModule->userModelIdField => $this->id]);
         $query->andFilterWhere(['like', $this->rbacModule->userModelLoginField, $this->login]);
 
         return $dataProvider;
     }
-
 }

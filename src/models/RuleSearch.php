@@ -1,6 +1,6 @@
 <?php
 
-namespace s4studio\rbacplus\models;
+namespace marqu3s\rbacplus\models;
 
 use Yii;
 use yii\data\ArrayDataProvider;
@@ -10,21 +10,20 @@ use yii\data\ArrayDataProvider;
  * @author Edmund Kawalec <e.kawalec@s4studio.pl>
  * @since 1.0.0
  */
-class RuleSearch extends Rule {
-
+class RuleSearch extends Rule
+{
     /**
      *
-     * @var string 
+     * @var string
      */
     public $name;
 
     /**
      * @inheritdoc
      */
-    public function rules() {
-        return [
-            [['name'], 'safe']
-        ];
+    public function rules()
+    {
+        return [[['name'], 'safe']];
     }
 
     /**
@@ -32,14 +31,15 @@ class RuleSearch extends Rule {
      * @param array $params
      * @return \yii\data\ActiveDataProvider|\yii\data\ArrayDataProvider
      */
-    public function search($params) {
+    public function search($params)
+    {
         $this->load($params);
         $authManager = Yii::$app->authManager;
         $models = [];
         foreach ($authManager->getRules() as $name => $item) {
             if ($this->name == null || empty($this->name)) {
                 $models[$name] = new Rule($item);
-            } else if (strpos($name, $this->name) !== FALSE) {
+            } elseif (strpos($name, $this->name) !== false) {
                 $models[$name] = new Rule($item);
             }
         }
@@ -47,5 +47,4 @@ class RuleSearch extends Rule {
             'allModels' => $models,
         ]);
     }
-
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace s4studio\rbacplus\models;
+namespace marqu3s\rbacplus\models;
 
 use Yii;
 use yii\base\Model;
@@ -10,18 +10,19 @@ use yii\base\Model;
  * @author Edmund Kawalec <e.kawalec@s4studio.pl>
  * @since 1.0.0
  */
-class AssignmentForm extends Model {
-
+class AssignmentForm extends Model
+{
     public $userId;
     public $roles = [];
     public $authManager;
 
     /**
-     * 
+     *
      * @param mixed $userId The id of user use for assign
-     * @param array $config 
+     * @param array $config
      */
-    public function __construct($userId, $config = array()) {
+    public function __construct($userId, $config = [])
+    {
         parent::__construct($config);
         $this->userId = $userId;
         $this->authManager = Yii::$app->authManager;
@@ -33,17 +34,16 @@ class AssignmentForm extends Model {
     /**
      * @inheritdoc
      */
-    public function rules() {
-        return [
-            [['userId'], 'required'],
-            [['roles'], 'default'],
-        ];
+    public function rules()
+    {
+        return [[['userId'], 'required'], [['roles'], 'default']];
     }
 
     /**
      * @inheritdoc
      */
-    public function attributeLabels() {
+    public function attributeLabels()
+    {
         return [
             'userId' => Yii::t('rbac', 'User ID'),
             'roles' => Yii::t('rbac', 'Roles'),
@@ -54,7 +54,8 @@ class AssignmentForm extends Model {
      * Save assignment data
      * @return boolean whether assignment save success
      */
-    public function save() {
+    public function save()
+    {
         $this->authManager->revokeAll($this->userId);
         if ($this->roles != null) {
             foreach ($this->roles as $role) {
@@ -63,5 +64,4 @@ class AssignmentForm extends Model {
         }
         return true;
     }
-
 }

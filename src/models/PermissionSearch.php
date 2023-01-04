@@ -1,6 +1,6 @@
 <?php
 
-namespace s4studio\rbacplus\models;
+namespace marqu3s\rbacplus\models;
 
 use Yii;
 use yii\rbac\Item;
@@ -10,20 +10,22 @@ use yii\rbac\Item;
  * @author Edmund Kawalec <e.kawalec@s4studio.pl>
  * @since 1.0.0
  */
-class PermissionSearch extends AuthItemSearch {
-
-    public function __construct($config = array()) {
+class PermissionSearch extends AuthItemSearch
+{
+    public function __construct($config = [])
+    {
         parent::__construct($item = null, $config);
     }
 
-    public function attributeLabels() {
+    public function attributeLabels()
+    {
         $labels = parent::attributeLabels();
         $labels['name'] = Yii::t('rbac', 'Permission name');
         return $labels;
     }
 
-    protected function getType() {
+    protected function getType()
+    {
         return Item::TYPE_PERMISSION;
     }
-
 }

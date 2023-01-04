@@ -1,6 +1,6 @@
 <?php
 
-namespace s4studio\rbacplus\models;
+namespace marqu3s\rbacplus\models;
 
 use Yii;
 use yii\rbac\Item;
@@ -10,11 +10,12 @@ use yii\rbac\Item;
  * @author Edmund Kawalec <e.kawalec@s4studio.pl>
  * @since 1.0.0
  */
-class Role extends AuthItem {
-
+class Role extends AuthItem
+{
     public $permissions = [];
 
-    public function init() {
+    public function init()
+    {
         parent::init();
         if (!$this->isNewRecord) {
             $permissions = [];
@@ -25,17 +26,20 @@ class Role extends AuthItem {
         }
     }
 
-    public function scenarios() {
+    public function scenarios()
+    {
         $scenarios = parent::scenarios();
         $scenarios['default'][] = 'permissions';
         return $scenarios;
     }
 
-    protected function getType() {
+    protected function getType()
+    {
         return Item::TYPE_ROLE;
     }
 
-    public function afterSave($insert,$changedAttributes) {
+    public function afterSave($insert, $changedAttributes)
+    {
         $authManager = Yii::$app->authManager;
         $role = $authManager->getRole($this->item->name);
         if (!$insert) {
@@ -49,22 +53,24 @@ class Role extends AuthItem {
         }
     }
 
-    public function attributeLabels() {
+    public function attributeLabels()
+    {
         $labels = parent::attributeLabels();
         $labels['name'] = Yii::t('rbac', 'Role name');
         $labels['permissions'] = Yii::t('rbac', 'Permissions');
         return $labels;
     }
 
-    public static function find($name) {
+    public static function find($name)
+    {
         $authManager = Yii::$app->authManager;
         $item = $authManager->getRole($name);
         return new self($item);
     }
 
-    public static function getPermistions($name) {
+    public static function getPermistions($name)
+    {
         $authManager = Yii::$app->authManager;
         return $authManager->getPermissionsByRole($name);
     }
-
 }
