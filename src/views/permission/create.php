@@ -1,11 +1,10 @@
 <?php
 
-use yii\helpers\Html;
+use marqu3s\rbacplus\models\AuthItem;
+use yii\web\View;
 
-
-/* @var $this yii\web\View */
-/* @var $model s4studio\rbacplus\models\AuthItem */
-
+/** @var View $this */
+/** @var AuthItem $model */
 ?>
 <div class="auth-item-create">
     <?= $this->render('_form', [

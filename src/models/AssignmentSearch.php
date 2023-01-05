@@ -4,7 +4,7 @@ namespace marqu3s\rbacplus\models;
 
 use Yii;
 use yii\data\ActiveDataProvider;
-use s4studio\rbacplus\Module;
+use marqu3s\rbacplus\Module;
 
 /**
  * @author John Martin <john.itvn@gmail.com>

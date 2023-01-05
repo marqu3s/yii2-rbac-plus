@@ -2,13 +2,13 @@
 
 namespace marqu3s\rbacplus\controllers;
 
+use marqu3s\rbacplus\models\AssignmentForm;
+use marqu3s\rbacplus\models\AssignmentSearch;
+use marqu3s\rbacplus\Module;
 use Yii;
+use yii\helpers\Html;
 use yii\web\Controller;
 use yii\web\Response;
-use yii\helpers\Html;
-use s4studio\rbacplus\Module;
-use s4studio\rbacplus\models\AssignmentSearch;
-use s4studio\rbacplus\models\AssignmentForm;
 
 /**
  * AssignmentController is controller for manager user assignment

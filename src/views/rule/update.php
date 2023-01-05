@@ -1,9 +1,8 @@
 <?php
 
 use yii\helpers\Html;
-
 /* @var $this yii\web\View */
-/* @var $model s4studio\rbacplus\models\AuthItem */
+/* @var $model marqu3s\rbacplus\models\AuthItem */
 ?>
 <div class="auth-item-update">
 

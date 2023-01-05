@@ -8,8 +8,8 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\web\Response;
 use yii\helpers\Html;
-use s4studio\rbacplus\models\Rule;
-use s4studio\rbacplus\models\RuleSearch;
+use marqu3s\rbacplus\models\Rule;
+use marqu3s\rbacplus\models\RuleSearch;
 
 /**
  * RuleController is controller for manager rule

@@ -8,8 +8,8 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\web\Response;
 use yii\helpers\Html;
-use s4studio\rbacplus\models\Role;
-use s4studio\rbacplus\models\RoleSearch;
+use marqu3s\rbacplus\models\Role;
+use marqu3s\rbacplus\models\RoleSearch;
 
 /**
  * RoleController is controller for manager role

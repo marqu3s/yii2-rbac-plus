@@ -2,14 +2,14 @@
 
 namespace marqu3s\rbacplus\controllers;
 
+use marqu3s\rbacplus\models\Permission;
+use marqu3s\rbacplus\models\PermissionSearch;
 use Yii;
+use yii\filters\VerbFilter;
+use yii\helpers\Html;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 use yii\web\Response;
-use yii\helpers\Html;
-use s4studio\rbacplus\models\Permission;
-use s4studio\rbacplus\models\PermissionSearch;
 
 /**
  * PermissionController is controller for manager permissions
@@ -26,7 +26,7 @@ class PermissionController extends Controller
     {
         return [
             'verbs' => [
-                'class' => VerbFilter::className(),
+                'class' => VerbFilter::class,
                 'actions' => [
                     'delete' => ['post'],
                     'bulk-delete' => ['post'],
