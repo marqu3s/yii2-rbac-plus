@@ -2,14 +2,14 @@
 
 namespace marqu3s\rbacplus\controllers;
 
-use Yii;
-use yii\web\Controller;
-use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
-use yii\web\Response;
-use yii\helpers\Html;
 use marqu3s\rbacplus\models\Role;
 use marqu3s\rbacplus\models\RoleSearch;
+use Yii;
+use yii\filters\VerbFilter;
+use yii\helpers\Html;
+use yii\web\Controller;
+use yii\web\NotFoundHttpException;
+use yii\web\Response;
 
 /**
  * RoleController is controller for manager role
@@ -285,7 +285,7 @@ class RoleController extends Controller
         if (($model = Role::find($name)) !== null) {
             return $model;
         } else {
-            throw new NotFoundHttpException(Yii::t('rbac', 'The requested page does not exist.'));
+            throw new NotFoundHttpException(Yii::t('rbac', 'The requested role does not exist.'));
         }
     }
 }
