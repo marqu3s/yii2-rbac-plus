@@ -1,14 +1,18 @@
 <?php
-use yii\helpers\Html;
 use kartik\grid\GridView;
+use marqu3s\rbacplus\models\AuthItemSearch;
+use yii\data\ActiveDataProvider;
+use yii\helpers\Html;
+use yii\web\View;
 
-/* @var $this yii\web\View */
-/* @var $searchModel marqu3s\rbacplus\models\AuthItemSearch */
-/* @var $dataProvider yii\data\ActiveDataProvider */
+/** @var View $this */
+/** @var AuthItemSearch $searchModel */
+/** @var ActiveDataProvider $dataProvider */
 
 $this->title = Yii::t('rbac', 'Rules Manager');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
+<br>
 <div class="auth-item-index">
     <div id="ajaxCrudDatatable">
         <?= GridView::widget([
@@ -41,6 +45,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 'role' => 'modal-remote',
                                 'title' => Yii::t('rbac', 'Create new rule'),
                                 'class' => 'btn btn-default',
+                                'data-pjax' => 0,
                             ]
                         ) .
                         Html::a(

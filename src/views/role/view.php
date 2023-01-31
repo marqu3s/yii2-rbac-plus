@@ -9,9 +9,9 @@ $firstRole = '';
 $rowsRoles = [];
 foreach ($roles as $role) {
     if (empty($firstRole)) {
-        $firstRole = $role->name;
+        $firstRole = $role->description;
     } else {
-        $rowsRoles[] = '<tr><td>' . $role->name . '</td></tr>';
+        $rowsRoles[] = '<tr><td>' . $role->description . '</td></tr>';
     }
 }
 
@@ -19,9 +19,9 @@ $firstPermission = '';
 $rowsPermissions = [];
 foreach ($permissions as $permission) {
     if (empty($firstPermission)) {
-        $firstPermission = $permission->name;
+        $firstPermission = $permission->description;
     } else {
-        $rowsPermissions[] = '<tr><td>' . $permission->name . '</td></tr>';
+        $rowsPermissions[] = '<tr><td>' . $permission->description . '</td></tr>';
     }
 }
 ?>
