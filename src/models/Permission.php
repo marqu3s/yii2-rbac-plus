@@ -14,6 +14,19 @@ use yii\rbac\Item;
  */
 class Permission extends AuthItem
 {
+    public $permissions = [];
+
+    public function init()
+    {
+        parent::init();
+
+        if (!$this->isNewRecord) {
+            foreach (static::getPermissions($this->item->name) as $permission) {
+                $this->permissions[] = $permission->name;
+            }
+        }
+    }
+
     protected function getType()
     {
         return Item::TYPE_PERMISSION;
@@ -31,5 +44,11 @@ class Permission extends AuthItem
         $authManager = Yii::$app->authManager;
         $item = $authManager->getPermission($name);
         return new self($item);
+    }
+
+    public static function getPermissions($name)
+    {
+        $authManager = Yii::$app->authManager;
+        return $authManager->getPermissionsByRole($name);
     }
 }
