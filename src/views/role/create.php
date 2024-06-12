@@ -1,12 +1,9 @@
 <?php
 
-use marqu3s\rbacplus\models\Role;
-use yii\web\View;
-
-/** @var View $this */
-/** @var Role $model */
+use yii\helpers\Html;
+/* @var $this yii\web\View */
+/* @var $model marqu3s\rbacplus\models\AuthItem */
 ?>
-<br>
 <div class="auth-item-create">
     <?= $this->render('_form', [
         'model' => $model,

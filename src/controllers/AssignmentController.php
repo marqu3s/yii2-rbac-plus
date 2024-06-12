@@ -6,7 +6,9 @@ use marqu3s\rbacplus\models\AssignmentForm;
 use marqu3s\rbacplus\models\AssignmentSearch;
 use marqu3s\rbacplus\Module;
 use Yii;
+use yii\helpers\Html;
 use yii\web\Controller;
+use yii\web\Response;
 
 /**
  * AssignmentController is controller for manager user assignment
@@ -58,18 +60,34 @@ class AssignmentController extends Controller
         $model = call_user_func($this->rbacModule->userModelClassName . '::findOne', $id);
         $formModel = new AssignmentForm($id);
         $request = Yii::$app->request;
-        if ($request->isPost) {
-            $formModel->load(Yii::$app->request->post());
-            $formModel->save();
-
-            Yii::$app->session->setFlash('success', Yii::t('rbac', 'Assignment has been saved.'));
-
-            return $this->redirect(['index']);
+        if ($request->isAjax) {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            if ($request->isPost) {
+                $formModel->load(Yii::$app->request->post());
+                $formModel->save();
+            }
+            return [
+                'title' => $model->{$this->rbacModule->userModelLoginField},
+                'forceReload' => 'true',
+                'content' => $this->renderPartial('assignment', [
+                    'model' => $model,
+                    'formModel' => $formModel,
+                ]),
+                'footer' =>
+                    Html::button(Yii::t('rbac', 'Close'), [
+                        'class' => 'btn btn-default pull-left',
+                        'data-dismiss' => 'modal',
+                    ]) .
+                    Html::button(Yii::t('rbac', 'Save'), [
+                        'class' => 'btn btn-primary',
+                        'type' => 'submit',
+                    ]),
+            ];
+        } else {
+            return $this->render('assignment', [
+                'model' => $model,
+                'formModel' => $formModel,
+            ]);
         }
-
-        return $this->render('assignment', [
-            'model' => $model,
-            'formModel' => $formModel,
-        ]);
     }
 }

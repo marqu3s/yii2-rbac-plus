@@ -9,12 +9,19 @@ $columns = [
     ],
     [
         'class' => '\kartik\grid\DataColumn',
-        'attribute' => Yii::$app->getModule('rbac')->userModelIdField,
-        'width' => '60px',
+        'attribute' => 'id',
+        'hAlign' => 'center',
+        'vAlign' => 'middle',
+        'width' => '70px',
     ],
     [
         'class' => '\kartik\grid\DataColumn',
-        'attribute' => Yii::$app->getModule('rbac')->userModelLoginField,
+        'attribute' => 'login',
+        'value' => function ($model) {
+            $attr = Yii::$app->getModule('rbac')->userModelLoginField;
+            return $model->$attr;
+        },
+        'vAlign' => 'middle',
         'width' => '250px',
     ],
     [
@@ -24,6 +31,22 @@ $columns = [
             $idField = Yii::$app->getModule('rbac')->userModelIdField;
             $roles = [];
             foreach ($authManager->getRolesByUser($model->{$idField}) as $role) {
+                $roles[] = $role->name;
+            }
+            if (count($roles) == 0) {
+                return Yii::t('yii', '(not set)');
+            } else {
+                return implode(', ', $roles);
+            }
+        },
+    ],
+    [
+        'label' => 'All Permissions',
+        'content' => function ($model) {
+            $authManager = Yii::$app->authManager;
+            $idField = Yii::$app->getModule('rbac')->userModelIdField;
+            $roles = [];
+            foreach ($authManager->getPermissionsByUser($model->{$idField}) as $role) {
                 $roles[] = $role->name;
             }
             if (count($roles) == 0) {

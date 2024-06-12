@@ -26,7 +26,7 @@ class PermissionController extends Controller
     {
         return [
             'verbs' => [
-                'class' => VerbFilter::class,
+                'class' => VerbFilter::className(),
                 'actions' => [
                     'delete' => ['post'],
                     'bulk-delete' => ['post'],

@@ -5,11 +5,12 @@ use yii\helpers\Url;
 return [
     [
         'class' => 'kartik\grid\SerialColumn',
-        'width' => '30px',
+        'width' => '40px',
     ],
     [
         'attribute' => 'name',
         'label' => $searchModel->attributeLabels()['name'],
+        'width' => '300px',
     ],
     [
         'attribute' => 'description',
@@ -17,6 +18,7 @@ return [
     ],
     [
         'label' => $searchModel->attributeLabels()['ruleName'],
+        'width' => '140px',
         'value' => function ($model) {
             return $model->ruleName == null ? Yii::t('rbac', '(not use)') : $model->ruleName;
         },

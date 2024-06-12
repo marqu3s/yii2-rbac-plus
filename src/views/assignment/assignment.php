@@ -5,50 +5,41 @@ use yii\widgets\ActiveForm;
 /** Get all roles */
 $authManager = Yii::$app->authManager;
 ?>
-<br>
 <div class="user-assignment-form">
-    <?php $form = ActiveForm::begin(); ?>
-        <?= Html::activeHiddenInput($formModel, 'userId') ?>
-        <label class="control-label">
-            Roles for user <strong><?= $model->username ?></strong>
-        </label>
-        <input type="hidden" name="AssignmentForm[roles]" value="">
-        <table class="table table-striped table-bordered detail-view">
-            <thead>
+<?php $form = ActiveForm::begin(); ?>
+    <?= Html::activeHiddenInput($formModel, 'userId')?>
+    <label class="control-label"><?=$formModel->attributeLabels()['roles']?></label>
+    <input type="hidden" name="AssignmentForm[roles]" value="">
+    <table class="table table-striped table-bordered detail-view">
+        <thead>
+            <tr>
+                <th style="width:1px"></th>
+                <th style="width:150px">Name</th>
+                <th>Description</th>
+            </tr>
+        <tbody>            
+            <?php foreach ($authManager->getRoles() as $role): ?>
                 <tr>
-                    <th style="width:1px"></th>
-                    <th style="width:250px">Name</th>
-                    <th>Description</th>
-                </tr>
-            <tbody>
-                <?php foreach ($authManager->getRoles() as $role): ?>
-                    <tr>
-                        <?php
+                    <?php
                         $checked = true;
-                        if (
-                            $formModel->roles == null ||
-                            !is_array($formModel->roles) ||
-                            count($formModel->roles) == 0
-                        ) {
+                        if($formModel->roles==null||!is_array($formModel->roles)||count($formModel->roles)==0){
                             $checked = false;
-                        } elseif (!in_array($role->name, $formModel->roles)) {
+                        }else if(!in_array($role->name, $formModel->roles) ){
                             $checked = false;
-                        }
-                        ?>
-                        <td><input <?= $checked
-                            ? 'checked'
-                            : '' ?>  type="checkbox" name="AssignmentForm[roles][]" value="<?= $role->name ?>"></td>
-                        <td><?= $role->name ?></td>
-                        <td><?= $role->description ?></td>
-                    </tr>
-                <?php endforeach; ?>
-            </tbody>
-        </table>
-
-        <div class="form-group">
-            <?= Html::submitButton(Yii::t('rbac', 'Save'), ['class' => 'btn btn-success']) ?>
-        </div>
-
-    <?php ActiveForm::end(); ?>
+                        }                        
+                    ?>
+                    <td><input <?= $checked? "checked":"" ?>  type="checkbox" name="AssignmentForm[roles][]" value="<?= $role->name?>"></td>
+                    <td><?= $role->name ?></td>
+                    <td><?= $role->description ?></td>
+                </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+    <?php if (!Yii::$app->request->isAjax) { ?>
+    <div class="form-group">
+    <?= Html::submitButton(Yii::t('rbac', 'Save'), ['class' => 'btn btn-success']) ?>
+    </div>
+    <?php } ?>
+<?php ActiveForm::end(); ?>
 </div>
 

@@ -26,7 +26,7 @@ class RoleController extends Controller
     {
         return [
             'verbs' => [
-                'class' => VerbFilter::className(),
+                'class' => VerbFilter::class,
                 'actions' => [
                     'delete' => ['post'],
                     'bulk-delete' => ['post'],
@@ -285,7 +285,7 @@ class RoleController extends Controller
         if (($model = Role::find($name)) !== null) {
             return $model;
         } else {
-            throw new NotFoundHttpException(Yii::t('rbac', 'The requested role does not exist.'));
+            throw new NotFoundHttpException(Yii::t('rbac', 'The requested page does not exist.'));
         }
     }
 }

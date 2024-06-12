@@ -2,14 +2,14 @@
 
 namespace marqu3s\rbacplus\controllers;
 
-use Yii;
-use yii\web\Controller;
-use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
-use yii\web\Response;
-use yii\helpers\Html;
 use marqu3s\rbacplus\models\Rule;
 use marqu3s\rbacplus\models\RuleSearch;
+use Yii;
+use yii\filters\VerbFilter;
+use yii\helpers\Html;
+use yii\web\Controller;
+use yii\web\NotFoundHttpException;
+use yii\web\Response;
 
 /**
  * RuleController is controller for manager rule

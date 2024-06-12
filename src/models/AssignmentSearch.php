@@ -2,9 +2,9 @@
 
 namespace marqu3s\rbacplus\models;
 
+use marqu3s\rbacplus\Module;
 use Yii;
 use yii\data\ActiveDataProvider;
-use marqu3s\rbacplus\Module;
 
 /**
  * @author John Martin <john.itvn@gmail.com>
@@ -65,16 +65,17 @@ class AssignmentSearch extends \yii\base\Model
     public function search()
     {
         $query = call_user_func($this->rbacModule->userModelClassName . '::find');
+
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
-        $params = Yii::$app->request->getQueryParams();
 
+        $params = Yii::$app->request->getQueryParams();
         if (!($this->load($params) && $this->validate())) {
             return $dataProvider;
         }
 
-        $query->andFilterWhere([$this->usersModule->userModelIdField => $this->id]);
+        $query->andFilterWhere([$this->rbacModule->userModelIdField => $this->id]);
         $query->andFilterWhere(['like', $this->rbacModule->userModelLoginField, $this->login]);
 
         return $dataProvider;

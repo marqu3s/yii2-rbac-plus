@@ -51,7 +51,7 @@ class Module extends BaseModule
 
     /**
      * Callback before create controller
-     * @var mixed
+     * @var callable
      */
     public $beforeCreateController = null;
 
@@ -99,6 +99,7 @@ class Module extends BaseModule
         if ($this->beforeAction !== null && !call_user_func($this->beforeAction, $action)) {
             return false;
         }
+
         return parent::beforeAction($action);
     }
 }

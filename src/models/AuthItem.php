@@ -97,16 +97,14 @@ abstract class AuthItem extends Model
     }
 
     /**
-     * @inheritdoc
+     * Find auth item
+     * @param type $name
+     * @return AuthItem
      */
-    public function beforeSave()
-    {
-        return true;
-    }
+    //public abstract static function find($name);
 
     /**
-     * Save item.
-     *
+     * Save item
      * @return boolean
      */
     public function save()
@@ -115,10 +113,7 @@ abstract class AuthItem extends Model
             return false;
         }
 
-        if (!$this->beforeSave()) {
-            return false;
-        }
-
+        //$this->beforeSave();
         $authManager = Yii::$app->authManager;
 
         // Create new item
@@ -143,17 +138,22 @@ abstract class AuthItem extends Model
         $isNewRecord = $this->item == null ? true : false;
         $this->isNewRecord = !$isNewRecord;
         $this->item = $item;
+        //$this->afterSave($isNewRecord,$this->attributes);
 
-        $this->afterSave($isNewRecord, $this->attributes);
+        if ($this->getType() == Item::TYPE_ROLE) {
+            $role = $authManager->getRole($this->item->name);
+            if (!$isNewRecord) {
+                $authManager->removeChildren($role);
+            }
+            if ($this->permissions != null && is_array($this->permissions)) {
+                foreach ($this->permissions as $permissionName) {
+                    $permistion = $authManager->getPermission($permissionName);
+                    $authManager->addChild($role, $permistion);
+                }
+            }
+        }
 
         return true;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function afterSave($isNewRecord, $changedAttributes)
-    {
     }
 
     /**
