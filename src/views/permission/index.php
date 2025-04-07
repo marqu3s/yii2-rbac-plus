@@ -1,12 +1,15 @@
 <?php
-use yii\helpers\Html;
 use kartik\grid\GridView;
+use marqu3s\rbacplus\models\PermissionSearch;
+use yii\data\ActiveDataProvider;
+use yii\helpers\Html;
+use yii\web\View;
 
-/* @var $this yii\web\View */
-/* @var $searchModel marqu3s\rbacplus\models\AuthItemSearch */
-/* @var $dataProvider yii\data\ActiveDataProvider */
+/** @var View $this */
+/** @var PermissionSearch $searchModel */
+/** @var ActiveDataProvider $dataProvider */
 
-$this->title = Yii::t('rbac', 'Permisstions Manager');
+$this->title = Yii::t('rbac', 'Permissions Manager');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="auth-item-index">
@@ -41,6 +44,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 'role' => 'modal-remote',
                                 'title' => Yii::t('rbac', 'Create new rule'),
                                 'class' => 'btn btn-default',
+                                'data-pjax' => 0,
                             ]
                         ) .
                         Html::a(
