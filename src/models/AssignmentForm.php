@@ -12,9 +12,10 @@ use yii\base\Model;
  */
 class AssignmentForm extends Model
 {
+    public $authManager;
     public $userId;
     public $roles = [];
-    public $authManager;
+    public $permissions = [];
 
     /**
      *
@@ -29,6 +30,9 @@ class AssignmentForm extends Model
         foreach ($this->authManager->getRolesByUser($userId) as $role) {
             $this->roles[] = $role->name;
         }
+        foreach ($this->authManager->getPermissionsByUser($userId) as $permission) {
+            $this->permissions[] = $permission->name;
+        }
     }
 
     /**
@@ -36,7 +40,7 @@ class AssignmentForm extends Model
      */
     public function rules()
     {
-        return [[['userId'], 'required'], [['roles'], 'default']];
+        return [[['userId'], 'required'], [['roles', 'permissions'], 'default']];
     }
 
     /**
@@ -47,6 +51,7 @@ class AssignmentForm extends Model
         return [
             'userId' => Yii::t('rbac', 'User ID'),
             'roles' => Yii::t('rbac', 'Roles'),
+            'permissions' => Yii::t('rbac', 'Permissions'),
         ];
     }
 
@@ -57,11 +62,22 @@ class AssignmentForm extends Model
     public function save()
     {
         $this->authManager->revokeAll($this->userId);
-        if ($this->roles != null) {
+
+        if (is_array($this->roles) && count($this->roles) > 0) {
             foreach ($this->roles as $role) {
                 $this->authManager->assign($this->authManager->getRole($role), $this->userId);
             }
         }
+
+        if (is_array($this->permissions) && count($this->permissions) > 0) {
+            foreach ($this->permissions as $permission) {
+                $this->authManager->assign(
+                    $this->authManager->getPermission($permission),
+                    $this->userId
+                );
+            }
+        }
+
         return true;
     }
 }

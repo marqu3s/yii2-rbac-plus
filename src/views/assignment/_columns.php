@@ -1,81 +1,112 @@
 <?php
 
+use kartik\grid\ActionColumn;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
+use yii\web\IdentityInterface;
 
-$columns = [
+$get = $_GET;
+
+return [
     [
         'class' => 'kartik\grid\SerialColumn',
         'width' => '40px',
     ],
     [
         'class' => '\kartik\grid\DataColumn',
-        'attribute' => 'id',
-        'hAlign' => 'center',
-        'vAlign' => 'middle',
-        'width' => '70px',
-    ],
-    [
-        'class' => '\kartik\grid\DataColumn',
         'attribute' => 'login',
-        'value' => function ($model) {
+        'label' => Yii::$app->getModule('rbac')->userModelLoginFieldLabel,
+        'value' => function (IdentityInterface $model) {
             $attr = Yii::$app->getModule('rbac')->userModelLoginField;
             return $model->$attr;
         },
         'vAlign' => 'middle',
-        'width' => '250px',
+        'width' => '180px',
     ],
     [
+        'attribute' => 'role',
         'label' => 'Roles',
-        'content' => function ($model) {
+        'format' => 'html',
+        'vAlign' => 'middle',
+        'value' => function (IdentityInterface $model) {
             $authManager = Yii::$app->authManager;
             $idField = Yii::$app->getModule('rbac')->userModelIdField;
             $roles = [];
             foreach ($authManager->getRolesByUser($model->{$idField}) as $role) {
-                $roles[] = $role->name;
+                $roles[] = $role->description;
             }
             if (count($roles) == 0) {
-                return Yii::t('yii', '(not set)');
+                return null;
             } else {
-                return implode(', ', $roles);
+                return implode('<br>', $roles);
             }
         },
+        'filter' => ArrayHelper::map(Yii::$app->authManager->getRoles(), 'name', 'description'),
+        'width' => '250px',
     ],
     [
-        'label' => 'All Permissions',
-        'content' => function ($model) {
+        'label' => Yii::t(
+            'rbac',
+            'Permissions inherited from roles or attached directly to the user'
+        ),
+        'format' => 'raw',
+        'vAlign' => 'middle',
+        'value' => function (IdentityInterface $model) {
             $authManager = Yii::$app->authManager;
             $idField = Yii::$app->getModule('rbac')->userModelIdField;
             $roles = [];
             foreach ($authManager->getPermissionsByUser($model->{$idField}) as $role) {
-                $roles[] = $role->name;
+                $roles[] = $role->description;
             }
             if (count($roles) == 0) {
-                return Yii::t('yii', '(not set)');
-            } else {
-                return implode(', ', $roles);
+                return null;
             }
-        },
-    ],
-];
+            if (count($roles) > 3) {
+                $visibleRoles = array_slice($roles, 0, 3);
+                $hiddenRoles = array_slice($roles, 3);
 
-$extraColums = \Yii::$app->getModule('rbac')->userModelExtraDataColumls;
-if ($extraColums !== null) {
-    // If extra colums exist merge and return
-    $columns = array_merge($columns, $extraColums);
-}
-$columns[] = [
-    'class' => 'kartik\grid\ActionColumn',
-    'template' => '{update}',
-    'header' => Yii::t('rbac', 'Assignment'),
-    'dropdown' => false,
-    'vAlign' => 'middle',
-    'urlCreator' => function ($action, $model, $key, $index) {
-        return Url::to(['assignment', 'id' => $key]);
-    },
-    'updateOptions' => [
-        'role' => 'modal-remote',
-        'title' => Yii::t('rbac', 'Update'),
-        'data-toggle' => 'tooltip',
+                $html = implode('<br>', $visibleRoles);
+                $html .=
+                    '<br><button type="button" class="btn btn-link btn-xs" onclick="$(this).next().toggle(); $(this).hide();">' .
+                    Yii::t('rbac', 'Show {count} more', ['count' => count($hiddenRoles)]) .
+                    '</button>';
+                $html .= '<div style="display:none">' . implode('<br>', $hiddenRoles) . '</div>';
+                return $html;
+            }
+            return implode('<br>', $roles);
+        },
+        'width' => '350px',
+    ],
+    [
+        'class' => '\kartik\grid\BooleanColumn',
+        'attribute' => 'userActive',
+        'label' => Yii::$app->getModule('rbac')->userModelActiveFieldLabel,
+        'value' => function (IdentityInterface $model) {
+            $activeField = Yii::$app->getModule('rbac')->userModelActiveField;
+            return $model->{$activeField};
+        },
+        'filter' => Yii::$app->getModule('rbac')->userModelActiveFieldFilterOptions,
+        'vAlign' => 'middle',
+        'width' => '90px',
+    ],
+    [
+        'class' => ActionColumn::class,
+        'template' => '{update}',
+        'header' => Yii::t('rbac', 'Actions'),
+        'dropdown' => false,
+        'vAlign' => 'middle',
+        'urlCreator' => function ($action, $model, $key, $index) {
+            $params = ['assignment'];
+            $params['id'] = $key;
+            foreach (Yii::$app->request->get('AssignmentSearch', []) as $key => $value) {
+                $params['AssignmentSearch[' . $key . ']'] = $value;
+            }
+            return Url::to($params);
+        },
+        'updateOptions' => [
+            'title' => Yii::t('rbac', 'Update'),
+            'data-toggle' => 'tooltip',
+        ],
+        'width' => '80px',
     ],
 ];
-return $columns;

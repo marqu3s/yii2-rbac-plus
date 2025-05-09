@@ -63,6 +63,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'striped' => true,
             'condensed' => true,
             'responsive' => true,
+            'hover' => true,
             'panel' => [
                 'type' => 'primary',
                 'heading' => '<i class="glyphicon glyphicon-list"></i> ' . $this->title,

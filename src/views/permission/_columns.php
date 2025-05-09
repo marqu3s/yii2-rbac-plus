@@ -17,11 +17,9 @@ return [
         'label' => $searchModel->attributeLabels()['description'],
     ],
     [
+        'attribute' => 'ruleName',
         'label' => $searchModel->attributeLabels()['ruleName'],
         'width' => '140px',
-        'value' => function ($model) {
-            return $model->ruleName == null ? Yii::t('rbac', '(not use)') : $model->ruleName;
-        },
     ],
     [
         'class' => 'kartik\grid\ActionColumn',
@@ -31,26 +29,17 @@ return [
             return Url::to([$action, 'name' => $key]);
         },
         'viewOptions' => [
-            'role' => 'modal-remote',
             'title' => Yii::t('rbac', 'View'),
             'data-toggle' => 'tooltip',
         ],
         'updateOptions' => [
-            'role' => 'modal-remote',
             'title' => Yii::t('rbac', 'Update'),
             'data-toggle' => 'tooltip',
         ],
         'deleteOptions' => [
-            'role' => 'modal-remote',
             'title' => Yii::t('rbac', 'Delete'),
-            'data-confirm' => false,
-            'data-method' => false, // for overide yii data api
-            'data-request-method' => 'post',
+            'data-confirm' => Yii::t('rbac', 'Are you sure want to delete this item?'),
             'data-toggle' => 'tooltip',
-            'data-comfirm-ok' => Yii::t('rbac', 'Ok'),
-            'data-comfirm-cancel' => Yii::t('rbac', 'Cancel'),
-            'data-confirm-title' => Yii::t('rbac', 'Are you sure?'),
-            'data-confirm-message' => Yii::t('rbac', 'Are you sure want to delete this item'),
         ],
     ],
 ];
