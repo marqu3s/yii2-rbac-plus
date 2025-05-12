@@ -56,30 +56,9 @@ class RoleController extends Controller
      */
     public function actionView($name)
     {
-        $request = Yii::$app->request;
-        if ($request->isAjax) {
-            Yii::$app->response->format = Response::FORMAT_JSON;
-            return [
-                'title' => $name,
-                'content' => $this->renderPartial('view', [
-                    'model' => $this->findModel($name),
-                ]),
-                'footer' =>
-                    Html::button(Yii::t('rbac', 'Close'), [
-                        'class' => 'btn btn-default pull-left',
-                        'data-dismiss' => 'modal',
-                    ]) .
-                    Html::a(
-                        Yii::t('rbac', 'Edit'),
-                        ['update', 'name' => $name],
-                        ['class' => 'btn btn-primary', 'role' => 'modal-remote']
-                    ),
-            ];
-        } else {
-            return $this->render('view', [
-                'model' => $this->findModel($name),
-            ]);
-        }
+        return $this->render('view', [
+            'model' => $this->findModel($name),
+        ]);
     }
 
     /**
@@ -177,74 +156,16 @@ class RoleController extends Controller
         $request = Yii::$app->request;
         $model = $this->findModel($name);
 
-        if ($request->isAjax) {
-            /*
-             *   Process for ajax request
-             */
-            Yii::$app->response->format = Response::FORMAT_JSON;
-            if ($request->isGet) {
-                return [
-                    'title' => Yii::t('rbac', 'Update {0}', ['"' . $name . '" Role']),
-                    'content' => $this->renderPartial('update', [
-                        'model' => $this->findModel($name),
-                    ]),
-                    'footer' =>
-                        Html::button(Yii::t('rbac', 'Close'), [
-                            'class' => 'btn btn-default pull-left',
-                            'data-dismiss' => 'modal',
-                        ]) .
-                        Html::button(Yii::t('rbac', 'Save'), [
-                            'class' => 'btn btn-primary',
-                            'type' => 'submit',
-                        ]),
-                ];
-            } elseif ($model->load($request->post()) && $model->save()) {
-                return [
-                    'forceReload' => 'true',
-                    'title' => $name,
-                    'content' => $this->renderPartial('view', [
-                        'model' => $this->findModel($name),
-                    ]),
-                    'footer' =>
-                        Html::button(Yii::t('rbac', 'Close'), [
-                            'class' => 'btn btn-default pull-left',
-                            'data-dismiss' => 'modal',
-                        ]) .
-                        Html::a(
-                            Yii::t('rbac', 'Edit'),
-                            ['update', 'name' => $name],
-                            ['class' => 'btn btn-primary', 'role' => 'modal-remote']
-                        ),
-                ];
-            } else {
-                return [
-                    'title' => Yii::t('rbac', 'Update {0}', ['"' . $name . '" Role']),
-                    'content' => $this->renderPartial('update', [
-                        'model' => $model,
-                    ]),
-                    'footer' =>
-                        Html::button(Yii::t('rbac', 'Close'), [
-                            'class' => 'btn btn-default pull-left',
-                            'data-dismiss' => 'modal',
-                        ]) .
-                        Html::button(Yii::t('rbac', 'Save'), [
-                            'class' => 'btn btn-primary',
-                            'type' => 'submit',
-                        ]),
-                ];
-            }
-        } else {
-            /*
-             *   Process for non-ajax request
-             */
-            if ($model->load($request->post()) && $model->save()) {
+        if ($request->isPost && $model->load($request->post())) {
+            $model->validate();
+            if ($model->save()) {
                 return $this->redirect(['view', 'name' => $model->name]);
-            } else {
-                return $this->render('update', [
-                    'model' => $model,
-                ]);
             }
         }
+
+        return $this->render('update', [
+            'model' => $model,
+        ]);
     }
 
     /**

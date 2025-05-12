@@ -2,6 +2,7 @@
 
 namespace marqu3s\rbacplus\models;
 
+use marqu3s\rbacplus\models\Permission;
 use Yii;
 use yii\base\Model;
 
@@ -30,7 +31,8 @@ class AssignmentForm extends Model
         foreach ($this->authManager->getRolesByUser($userId) as $role) {
             $this->roles[] = $role->name;
         }
-        foreach ($this->authManager->getPermissionsByUser($userId) as $permission) {
+        $permissions = Permission::getDirectPermissionsByUser($userId);
+        foreach ($permissions as $permission) {
             $this->permissions[] = $permission->name;
         }
     }

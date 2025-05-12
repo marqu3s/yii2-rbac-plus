@@ -25,6 +25,7 @@ class RoleSearch extends AuthItemSearch
         $labels = parent::attributeLabels();
         $labels['name'] = Yii::t('rbac', 'Role name');
         $labels['permissions'] = Yii::t('rbac', 'Permissions');
+        $labels['childRoles'] = Yii::t('rbac', 'Child roles');
         return $labels;
     }
 

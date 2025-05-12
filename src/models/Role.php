@@ -13,17 +13,41 @@ use yii\rbac\Item;
 class Role extends AuthItem
 {
     public $permissions = [];
+    public $childRoles = [];
 
     public function init()
     {
         parent::init();
+
         if (!$this->isNewRecord) {
             $permissions = [];
-            foreach (static::getPermistions($this->item->name) as $permission) {
-                $permissions[] = $permission->name;
+            foreach (static::getPermissions($this->item->name) as $permission) {
+                $permissions[] = $permission->description;
             }
+
+            sort($permissions);
             $this->permissions = $permissions;
+
+            $childRoles = [];
+            foreach (static::getChildRoles($this->item->name) as $childRole) {
+                if ($childRole->type == Item::TYPE_PERMISSION) {
+                    continue;
+                }
+
+                $childRoles[] = $childRole->description;
+            }
+
+            sort($childRoles);
+            $this->childRoles = $childRoles;
         }
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function rules()
+    {
+        return array_merge(parent::rules(), [[['permissions', 'childRoles'], 'safe']]);
     }
 
     public function scenarios()
@@ -38,26 +62,12 @@ class Role extends AuthItem
         return Item::TYPE_ROLE;
     }
 
-    public function afterSave($insert, $changedAttributes)
-    {
-        $authManager = Yii::$app->authManager;
-        $role = $authManager->getRole($this->item->name);
-        if (!$insert) {
-            $authManager->removeChildren($role);
-        }
-        if ($this->permissions != null && is_array($this->permissions)) {
-            foreach ($this->permissions as $permissionName) {
-                $permistion = $authManager->getPermission($permissionName);
-                $authManager->addChild($role, $permistion);
-            }
-        }
-    }
-
     public function attributeLabels()
     {
         $labels = parent::attributeLabels();
         $labels['name'] = Yii::t('rbac', 'Role name');
         $labels['permissions'] = Yii::t('rbac', 'Permissions');
+        $labels['childRoles'] = Yii::t('rbac', 'Child roles');
         return $labels;
     }
 
@@ -68,9 +78,23 @@ class Role extends AuthItem
         return new self($item);
     }
 
-    public static function getPermistions($name)
+    public static function getPermissions($name)
     {
         $authManager = Yii::$app->authManager;
         return $authManager->getPermissionsByRole($name);
+    }
+
+    public static function getChildRoles($name)
+    {
+        $authManager = Yii::$app->authManager;
+        $children = $authManager->getChildren($name);
+        $roles = [];
+        foreach ($children as $child) {
+            if ($child->type == Item::TYPE_ROLE) {
+                $roles[] = $child;
+            }
+        }
+
+        return $roles;
     }
 }

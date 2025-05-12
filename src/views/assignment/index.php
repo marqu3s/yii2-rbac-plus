@@ -12,8 +12,15 @@ use yii\web\View;
 /** @var string $idField */
 /** @var string $usernameField */
 
-$this->title = Yii::t('rbac', 'User Roles Assignment');
+$this->title = Yii::t('rbac', 'Permissions Assignment');
 $this->params['breadcrumbs'][] = $this->title;
+
+$js = <<<JS
+    $('body').on('click', '.btn-show-more', function() {
+        $(this).next().toggle(); $(this).hide();
+    });
+JS;
+$this->registerJs($js);
 ?>
 <div class="auth-item-index">
     <?= GridView::widget([
@@ -44,6 +51,24 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'content' =>
                     Html::a(
+                        Yii::t('rbac', 'Permissions'),
+                        ['permission/index'],
+                        [
+                            'title' => Yii::t('rbac', 'Permissions Management'),
+                            'class' => 'btn btn-default',
+                            'data-pjax' => 0,
+                        ]
+                    ) .
+                    Html::a(
+                        Yii::t('rbac', 'Roles'),
+                        ['role/index'],
+                        [
+                            'title' => Yii::t('rbac', 'Roles Management'),
+                            'class' => 'btn btn-default',
+                            'data-pjax' => 0,
+                        ]
+                    ) .
+                    Html::a(
                         '<i class="glyphicon glyphicon-repeat"></i>',
                         [''],
                         [
@@ -51,7 +76,8 @@ $this->params['breadcrumbs'][] = $this->title;
                             'class' => 'btn btn-default',
                             'title' => Yii::t('rbac', 'Reload Grid'),
                         ]
-                    ) . '{toggleData}',
+                    ) .
+                    '{toggleData}',
             ],
         ],
         'panel' => [

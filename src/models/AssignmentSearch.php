@@ -5,6 +5,8 @@ namespace marqu3s\rbacplus\models;
 use marqu3s\rbacplus\Module;
 use Yii;
 use yii\data\ActiveDataProvider;
+use yii\db\Expression;
+use yii\rbac\Item;
 
 /**
  * @author John Martin <john.itvn@gmail.com>
@@ -35,10 +37,16 @@ class AssignmentSearch extends \yii\base\Model
     public $userActive;
 
     /**
-     * Used to filter the grid by a role.
+     * Used to filter the grid by a direct role.
      * @var string $role
      */
     public $role;
+
+    /**
+     * Used to filter the grid by a direct permission.
+     * @var string $permission
+     */
+    public $permission;
 
     /**
      * @inheritdoc
@@ -54,7 +62,7 @@ class AssignmentSearch extends \yii\base\Model
      */
     public function rules()
     {
-        return [[['id', 'login', 'userActive', 'role'], 'safe']];
+        return [[['id', 'login', 'userActive', 'role', 'permission'], 'safe']];
     }
 
     /**
@@ -67,13 +75,29 @@ class AssignmentSearch extends \yii\base\Model
         $authItemTbl = Yii::$app->authManager->itemTable;
 
         $query = call_user_func($this->rbacModule->userModelClassName . '::find');
-
-        $query->leftJoin(
-            $authAssignmentTbl . ' ast',
-            'ast.user_id = ' . $userTbl . '.' . $this->rbacModule->userModelIdField
-        );
-
-        $query->leftJoin($authItemTbl . ' ait', 'ait.name = ast.item_name');
+        $query
+            ->select([
+                $userTbl . '.*',
+                'roles' => new Expression('GROUP_CONCAT(ait_roles.name)'),
+                'permissions' => new Expression('GROUP_CONCAT(ait_perm.name)'),
+            ])
+            ->leftJoin(
+                $authAssignmentTbl . ' ast_roles',
+                'ast_roles.user_id = ' . $userTbl . '.' . $this->rbacModule->userModelIdField
+            )
+            ->leftJoin(
+                $authItemTbl . ' ait_roles',
+                'ait_roles.name = ast_roles.item_name AND ait_roles.type = ' . Item::TYPE_ROLE
+            )
+            ->leftJoin(
+                $authAssignmentTbl . ' ast_perm',
+                'ast_perm.user_id = ' . $userTbl . '.' . $this->rbacModule->userModelIdField
+            )
+            ->leftJoin(
+                $authItemTbl . ' ait_perm',
+                'ait_perm.name = ast_perm.item_name AND ait_perm.type = ' . Item::TYPE_PERMISSION
+            )
+            ->groupBy($userTbl . '.' . $this->rbacModule->userModelIdField);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -94,10 +118,14 @@ class AssignmentSearch extends \yii\base\Model
             return $dataProvider;
         }
 
-        $query->andFilterWhere([$this->rbacModule->userModelIdField => $this->id]);
-        $query->andFilterWhere(['like', $this->rbacModule->userModelLoginField, $this->login]);
-        $query->andFilterWhere([$this->rbacModule->userModelActiveField => $this->userActive]);
-        $query->andFilterWhere(['ait.name' => $this->role]);
+        $query
+            ->andFilterWhere([$this->rbacModule->userModelIdField => $this->id])
+            ->andFilterWhere(['like', $this->rbacModule->userModelLoginField, $this->login])
+            ->andFilterWhere([$this->rbacModule->userModelActiveField => $this->userActive])
+            ->andFilterWhere(['like', 'ait_roles.name', $this->role])
+            ->andFilterWhere(['like', 'ait_perm.name', $this->permission]);
+
+        $sql = $query->createCommand()->getRawSql();
 
         return $dataProvider;
     }

@@ -15,6 +15,11 @@ $this->title = $title;
     
     <div class="form-group">
         <?= Html::a(Yii::t('rbac', 'Back'), ['index'], ['class' => 'btn btn-default']) ?>
+        <?= Html::a(
+            Yii::t('rbac', 'Update'),
+            ['update', 'name' => $model->name],
+            ['class' => 'btn btn-primary']
+        ) ?>
     </div>
 
     <table class="table table-striped table-bordered detail-view">
@@ -39,7 +44,7 @@ $this->title = $title;
                 <th><?= $model->attributeLabels()['data'] ?></th>
                 <td>
                     <?= $model->data == null
-                        ? '<span class="text-muted">' . Yii::t('rbac', '(not set)') . '</span>'
+                        ? '<span class="text-muted">' . Yii::t('yii', '(not set)') . '</span>'
                         : $model->data ?>
                 </td>
             </tr>

@@ -38,10 +38,27 @@ $this->params['breadcrumbs'][] = $this->title;
                 [
                     'content' =>
                         Html::a(
+                            Yii::t('rbac', 'Roles'),
+                            ['role/index'],
+                            [
+                                'title' => Yii::t('rbac', 'Roles Management'),
+                                'class' => 'btn btn-default',
+                                'data-pjax' => 0,
+                            ]
+                        ) .
+                        Html::a(
+                            Yii::t('rbac', 'Assignments'),
+                            ['assignment/index'],
+                            [
+                                'title' => Yii::t('rbac', 'Assignments Management'),
+                                'class' => 'btn btn-default',
+                                'data-pjax' => 0,
+                            ]
+                        ) .
+                        Html::a(
                             '<i class="glyphicon glyphicon-plus"></i>',
                             ['create'],
                             [
-                                'role' => 'modal-remote',
                                 'title' => Yii::t('rbac', 'Create new rule'),
                                 'class' => 'btn btn-default',
                                 'data-pjax' => 0,

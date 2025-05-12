@@ -3,6 +3,7 @@ namespace marqu3s\rbacplus\models;
 
 use Yii;
 use yii\data\ArrayDataProvider;
+use yii\helpers\ArrayHelper;
 use yii\rbac\Item;
 
 /**
@@ -38,6 +39,8 @@ abstract class AuthItemSearch extends AuthItem
         } else {
             $items = $authManager->getPermissions();
         }
+
+        ArrayHelper::multisort($items, 'description');
 
         if (
             $this->load($params) &&

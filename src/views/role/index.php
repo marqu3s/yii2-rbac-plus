@@ -11,6 +11,13 @@ use yii\web\View;
 
 $this->title = Yii::t('rbac', 'Roles Manager');
 $this->params['breadcrumbs'][] = $this->title;
+
+$js = <<<JS
+    $('body').on('click', '.btn-show-more', function() {
+        $(this).next().toggle(); $(this).hide();
+    });
+JS;
+$this->registerJs($js);
 ?>
 <div class="auth-item-index">
     <div id="ajaxCrudDatatable">
@@ -37,6 +44,24 @@ $this->params['breadcrumbs'][] = $this->title;
             'toolbar' => [
                 [
                     'content' =>
+                        Html::a(
+                            Yii::t('rbac', 'Permissions'),
+                            ['permission/index'],
+                            [
+                                'title' => Yii::t('rbac', 'Permissions Management'),
+                                'class' => 'btn btn-default',
+                                'data-pjax' => 0,
+                            ]
+                        ) .
+                        Html::a(
+                            Yii::t('rbac', 'Assignments'),
+                            ['assignment/index'],
+                            [
+                                'title' => Yii::t('rbac', 'Assignments Management'),
+                                'class' => 'btn btn-default',
+                                'data-pjax' => 0,
+                            ]
+                        ) .
                         Html::a(
                             '<i class="glyphicon glyphicon-plus"></i>',
                             ['create'],

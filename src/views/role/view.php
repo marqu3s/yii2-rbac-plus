@@ -1,6 +1,7 @@
 <?php
 
 use marqu3s\rbacplus\models\Role;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\web\View;
 
@@ -10,14 +11,23 @@ use yii\web\View;
 $title = Yii::t('rbac', 'Role Item');
 $this->title = $title;
 
-$permissions = Role::getPermistions($model->name);
-$first = '';
-$rows = [];
-foreach ($permissions as $permission) {
-    if (empty($first)) {
-        $first = $permission->name;
+$firstChildRole = '';
+$rowsChildRole = [];
+foreach ($model->childRoles as $childRole) {
+    if (empty($firstChildRole)) {
+        $firstChildRole = $childRole;
     } else {
-        $rows[] = '<tr><td>' . $permission->name . '</td></tr>';
+        $rowsChildRole[] = '<tr><td>' . $childRole . '</td></tr>';
+    }
+}
+
+$firstPermission = '';
+$rowsPermission = [];
+foreach ($model->permissions as $permission) {
+    if (empty($firstPermission)) {
+        $firstPermission = $permission;
+    } else {
+        $rowsPermission[] = '<tr><td>' . $permission . '</td></tr>';
     }
 }
 ?>
@@ -26,6 +36,11 @@ foreach ($permissions as $permission) {
 
     <div class="form-group">
         <?= Html::a(Yii::t('rbac', 'Back'), ['index'], ['class' => 'btn btn-default']) ?>
+        <?= Html::a(
+            Yii::t('rbac', 'Edit'),
+            ['update', 'name' => $model->name],
+            ['class' => 'btn btn-primary']
+        ) ?>
     </div>
 
     <table class="table table-striped table-bordered detail-view">
@@ -40,19 +55,24 @@ foreach ($permissions as $permission) {
             </tr>
             <tr>
                 <th><?= $model->attributeLabels()['ruleName'] ?></th>
-                <td>
-                    <?= $model->ruleName == null
-                        ? '<span class="text-danger">' . Yii::t('yii', '(not use)') . '</span>'
-                        : $model->ruleName ?>
-                </td>
+                <td><?= $model->ruleName ?></td>
             </tr>
             <tr>
-                <th rowspan="<?= count($permissions) ?>" >
+                <th rowspan="<?= count($model->childRoles) > 0 ? count($model->childRoles) : 1 ?>">
+                    <?= $model->attributeLabels()['childRoles'] ?>
+                </th>
+                <td><?= $firstChildRole ?></td>
+            </tr>
+            <?= implode('', $rowsChildRole) ?>
+            <tr>
+                <th rowspan="<?= count($model->permissions) > 0
+                    ? count($model->permissions)
+                    : 1 ?>">
                     <?= $model->attributeLabels()['permissions'] ?>
                 </th>
-                <td><?= $first ?></td>
+                <td><?= $firstPermission ?></td>
             </tr>
-            <?= implode('', $rows) ?>
+            <?= implode('', $rowsPermission) ?>
         </tbody>
     </table>
 </div>
