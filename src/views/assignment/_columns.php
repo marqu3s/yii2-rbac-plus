@@ -60,6 +60,8 @@ return [
                     $childRolesList[$childName] = $childRole->description;
                 }
             }
+            $childRolesList = array_unique($childRolesList);
+            asort($childRolesList);
             if (count($rolesList) == 0 && count($childRolesList) == 0) {
                 return null;
             } else {
@@ -102,6 +104,8 @@ return [
             foreach (Permission::getDirectPermissionsByUser($model->{$idField}) as $permission) {
                 $directPermissions[] = $permission->description;
             }
+            $directPermissions = array_unique($directPermissions);
+            sort($directPermissions);
             $roles = $authManager->getRolesByUser($model->{$idField});
             foreach ($roles as $role) {
                 $permissionsFromRole = $authManager->getPermissionsByRole($role->name);
@@ -109,6 +113,8 @@ return [
                     $inheritedPermissions[] = $permission->description;
                 }
             }
+            $inheritedPermissions = array_unique($inheritedPermissions);
+            sort($inheritedPermissions);
             $html = '';
             if (count($directPermissions) > 0) {
                 $html .=
