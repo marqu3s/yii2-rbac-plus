@@ -35,6 +35,7 @@ return [
                 }
             }
             $childRoles = ArrayHelper::getColumn($childRoles, 'description');
+            $childRoles = array_unique($childRoles);
             asort($childRoles);
             if (count($childRoles) > 0) {
                 if (count($childRoles) > 3) {
@@ -67,6 +68,7 @@ return [
             $am = Yii::$app->authManager;
             $permissions = $am->getPermissionsByRole($model->name);
             $permissions = ArrayHelper::getColumn($permissions, 'description');
+            $permissions = array_unique($permissions);
             asort($permissions);
             if (count($permissions) > 0) {
                 if (count($permissions) > 3) {
